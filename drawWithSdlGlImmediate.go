@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/banthar/Go-SDL/sdl"
+	"github.com/adam000/Go-SDL/sdl"
 	"github.com/go-gl/gl"
 )
 

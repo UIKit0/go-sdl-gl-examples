@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/banthar/Go-SDL/sdl"
+	"github.com/adam000/Go-SDL/sdl"
 )
 
 // Draw something! in SDL
