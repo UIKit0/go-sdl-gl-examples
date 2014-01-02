@@ -6,7 +6,7 @@ import (
 	"unsafe"
 
 	mat "bitbucket.org/zombiezen/math3/mat32"
-	"github.com/adam000/Go-SDL/sdl"
+	"github.com/adam000/Go-SDL2/sdl"
 	"github.com/go-gl/gl"
 )
 
