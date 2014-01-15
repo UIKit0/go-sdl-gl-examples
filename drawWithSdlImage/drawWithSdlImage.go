@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 
-	"github.com/adam000/Go-SDL2/sdl"
+	"github.com/adam000/Go-SDL/sdl"
 )
 
 // Draw something! in SDL
-func drawWithSdl() {
+func main() {
 	var img string = "imgs/preview2.jpg"
 
 	sdl.Init(sdl.INIT_EVERYTHING)

@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/adam000/Go-SDL2/sdl"
+	"github.com/adam000/Go-SDL/sdl"
 	"github.com/go-gl/gl"
 )
 
 // Draw something! in SDL using OpenGL immediate
-func drawWithSdlGlImmediate() {
+func main() {
 	const HEIGHT int = 800
 	const WIDTH int = 600
 

@@ -73,7 +73,7 @@ func makeSymmetricProjectionMatrix() mat.Matrix {
 }
 
 // Draw something! in SDL using OpenGL with shaders / retained mode
-func drawWithSdlGlRetained() {
+func main() {
 	const HEIGHT int = 800
 	const WIDTH int = 600
 
