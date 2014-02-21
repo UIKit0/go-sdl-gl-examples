@@ -1,44 +1,56 @@
 package main
 
 import (
-	"fmt"
-
-	"github.com/adam000/Go-SDL/sdl"
+	"github.com/adam000/Go-SDL2/sdl"
 )
 
 // Draw something! in SDL
 func main() {
-	var img string = "imgs/preview2.jpg"
+	var img string = "../imgs/preview2.jpg"
 
-	sdl.Init(sdl.INIT_EVERYTHING)
+	sdl.Init(sdl.InitEverything)
 	defer sdl.Quit()
 
-	window := sdl.CreateWindow("Hello world!", sdl.WINDOWPOS_CENTERED, sdl.WINDOWPOS_CENTERED, 800, 600, sdl.WINDOW_OPENGL)
-
-	if (window == nil) {
-		panic(sdl.GetError())
+	window, err := sdl.NewWindow("Hello world!", sdl.WindowPosCentered, sdl.WindowPosCentered, 800, 600, sdl.WindowOpenGL)
+	if err != nil {
+		panic(err)
 	}
 	defer window.Destroy()
 
-	renderer := sdl.CreateRenderer(window, -1, 0)
+	renderer, err := sdl.NewRenderer(window, -1, 0)
+	if err != nil {
+		panic(err)
+	}
 	defer renderer.Destroy()
 
-	surf := sdl.Load(img)
-	if surf == nil {
-		panic(sdl.GetError())
+	surf, err := sdl.LoadImage(img)
+	if err != nil {
+		panic(err)
 	}
 
-	tex := sdl.CreateTextureFromSurface(renderer, surf)
-	surf.Free() // TODO or is it sdl.FreeSurface(surf)?
+	tex, err := surf.ToTexture(renderer)
+	if err != nil {
+		panic(err)
+	}
+	surf.Free()
 	defer tex.Destroy()
 
+	quit := false
 	for {
-		if e := sdl.PollEvent; e != nil && e.type == sdl.QUIT {
-			break
+		if e := sdl.PollEvent(); e != nil {
+
+			switch t := e.Type(); t {
+			case sdl.QuitEv:
+				quit = true
+			}
+
+			if quit {
+				break
+			}
 		}
 
 		renderer.Clear()
-		renderer.Copy(tex, nil, nil)
+		renderer.CopyTexture(tex, nil, nil)
 		renderer.Present()
 	}
 }
