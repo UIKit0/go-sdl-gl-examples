@@ -6,13 +6,13 @@ import (
 
 // Draw something! in SDL
 func main() {
-	sdl.Init(sdl.INIT_EVERYTHING)
+	sdl.Init(sdl.InitEverything)
 	defer sdl.Quit()
 
-	window, err := sdl.CreateWindow("Hello world!", sdl.WINDOWPOS_CENTERED, sdl.WINDOWPOS_CENTERED,
-		800, 600, sdl.WINDOW_OPENGL)
+	window, err := sdl.NewWindow("Hello world!", sdl.WindowPosCentered, sdl.WindowPosCentered,
+		800, 600, sdl.WindowOpenGL)
 
-	if (err != nil) {
+	if err != nil {
 		panic(err)
 	}
 	defer window.Destroy()
