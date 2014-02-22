@@ -1,7 +1,8 @@
 package main
 
 import (
-	"github.com/adam000/Go-SDL/sdl"
+	"time"
+	"github.com/adam000/Go-SDL2/sdl"
 	"github.com/go-gl/gl"
 )
 
@@ -10,11 +11,20 @@ func main() {
 	const HEIGHT int = 800
 	const WIDTH int = 600
 
-	sdl.Init(sdl.INIT_EVERYTHING)
+	sdl.Init(sdl.InitEverything)
 	defer sdl.Quit()
 
-	screen := sdl.SetVideoMode(HEIGHT, WIDTH, 32, sdl.OPENGL)
-	_ = screen
+	window, err := sdl.NewWindow("Hello world!", sdl.WindowPosCentered, sdl.WindowPosCentered, 800, 600, sdl.WindowOpenGL)
+	if err != nil {
+		panic(err)
+	}
+	defer window.Destroy()
+
+	context, err := sdl.NewGlContext(window)
+	if err != nil {
+		panic(err)
+	}
+	defer context.Destroy()
 
 	if err := gl.Init(); err != 0 {
 		panic("Problem in GL initialization")
@@ -42,7 +52,7 @@ func main() {
 
 	gl.End()
 
-	sdl.GL_SwapBuffers()
-	sdl.Delay(5000)
+	sdl.SwapWindow(window)
+	time.Sleep(time.Second * 7)
 }
 
