@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/binary"
 	"math"
+	"time"
 	"unsafe"
 
 	mat "bitbucket.org/zombiezen/math3/mat32"
@@ -74,8 +75,8 @@ func makeSymmetricProjectionMatrix() mat.Matrix {
 
 // Draw something! in SDL using OpenGL with shaders / retained mode
 func main() {
-	const HEIGHT int = 800
-	const WIDTH int = 600
+	const height int = 800
+	const width int = 600
 
 	triVertexes := [][3]gl.GLfloat{
 		{2.0, 0.0, -5.0},
@@ -90,11 +91,20 @@ func main() {
 	}
 
 	// SDL Initialization
-	sdl.Init(sdl.INIT_EVERYTHING)
+	sdl.Init(sdl.InitEverything)
 	defer sdl.Quit()
 
-	screen := sdl.SetVideoMode(HEIGHT, WIDTH, 32, sdl.OPENGL)
-	_ = screen
+	window, err := sdl.NewWindow("Hello world!", sdl.WindowPosCentered, sdl.WindowPosCentered, 800, 600, sdl.WindowOpenGL)
+	if err != nil {
+		panic(err)
+	}
+	defer window.Destroy()
+
+	context, err := sdl.NewGLContext(window)
+	if err != nil {
+		panic(err)
+	}
+	defer context.Destroy()
 
 	// OpenGL initialization
 	if err := gl.Init(); err != 0 {
@@ -140,7 +150,6 @@ func main() {
 	colorBuffer.Bind(gl.ARRAY_BUFFER)
 	gl.BufferData(gl.ARRAY_BUFFER, binary.Size(triColors), triColors, gl.STATIC_DRAW)
 
-
 	// Draw - this portion suitable for a loop
 	gl.Clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
@@ -173,7 +182,7 @@ func main() {
 	colorAttrib.DisableArray()
 
 	gl.ProgramUnuse()
-	sdl.GL_SwapBuffers()
+	window.GLSwap()
 
-	sdl.Delay(5000)
+	time.Sleep(time.Second * 7)
 }
