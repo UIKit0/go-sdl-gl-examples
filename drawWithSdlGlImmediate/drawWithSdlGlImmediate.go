@@ -2,6 +2,7 @@ package main
 
 import (
 	"time"
+
 	"github.com/adam000/Go-SDL2/sdl"
 	"github.com/go-gl/gl"
 )
@@ -20,7 +21,7 @@ func main() {
 	}
 	defer window.Destroy()
 
-	context, err := sdl.NewGlContext(window)
+	context, err := sdl.NewGLContext(window)
 	if err != nil {
 		panic(err)
 	}
@@ -52,7 +53,6 @@ func main() {
 
 	gl.End()
 
-	sdl.SwapWindow(window)
+	window.GLSwap()
 	time.Sleep(time.Second * 7)
 }
-
